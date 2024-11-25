@@ -62,10 +62,10 @@ ip route add 192.168.1.200/30 dev macvlan0
 sudo iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -o macvlan0 -j MASQUERADE
 ```
 
+Добавление разрешеня для трафика
 ```shell
 sudo iptables -A FORWARD -s 192.168.1.0/24 -d 192.168.1.0/24 -j ACCEPT
 ```
-Добавление разрешеня для трафика
 
 Настройка маршрута на сервере Б (192.168.1.198). 
 ```shell
@@ -83,20 +83,22 @@ sudo docker ps -a
 
 ### Шаг 3. Проверка подключения с машины Б
 
-# Установка cassandra-tools для подключение к кластеру 
-'sudo snap install cqlsh'
+Установка cassandra-tools для подключение к кластеру 
+```shell
+sudo snap install cqlsh
+```
 
 Подключение к первому узлу
 ```shell
-cqlsh 192.168.1.200 9042
+cqlsh 192.168.1.200
 ```
 
 Подключение ко второму узлу
 ```shell
-cqlsh 192.168.1.201 9042
+cqlsh 192.168.1.201
 ```
 
 Подключение к третьему узлу
 ```shell
-cqlsh 192.168.1.202 9042
+cqlsh 192.168.1.202
 ```
