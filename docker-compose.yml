@@ -1,0 +1,76 @@
+services:
+  cassandra-1:
+    image: cassandra:latest
+    container_name: cassandra-1
+    networks:
+      cassandra_macvlan:
+        ipv4_address: 192.168.1.200
+    environment:
+      - CASSANDRA_LISTEN_ADDRESS=192.168.1.200
+      - CASSANDRA_BROADCAST_ADDRESS=192.168.1.200
+      - CASSANDRA_BROADCAST_RPC_ADDRESS=192.168.1.200
+    env_file:
+      - .env
+    ports:
+      - "9042:9042"
+    expose:
+        - 7000 # Внутренней порт (обмен информацией о состоянии кластера с другими узлами)/протокол Gossip
+        - 7001 # Внутренний порт/протокол Gossip через TLS (защищенный)
+        - 7199 # Порт для подключения к сервису JMX (мониторинг и управление экземплярами cassandra)
+        - 9042 # Порт для внешнего доступа извне через CQL
+        - 9142 # Порт для протокола CQL SSL
+
+  cassandra-2:
+    image: cassandra:latest
+    container_name: cassandra-2
+    networks:
+      cassandra_macvlan:
+        ipv4_address: 192.168.1.201
+    environment:
+      - CASSANDRA_LISTEN_ADDRESS=192.168.1.201
+      - CASSANDRA_BROADCAST_ADDRESS=192.168.1.201
+      - CASSANDRA_BROADCAST_RPC_ADDRESS=192.168.1.201
+    env_file:
+      - .env
+    ports:
+      - "9043:9042"
+    expose:
+        - 7000 
+        - 7001
+        - 7199 
+        - 9042
+        - 9142
+
+  cassandra-3:
+    image: cassandra:latest
+    container_name: cassandra-3
+    networks:
+      cassandra_macvlan:
+        ipv4_address: 192.168.1.202
+    environment:
+      - CASSANDRA_LISTEN_ADDRESS=192.168.1.202
+      - CASSANDRA_BROADCAST_ADDRESS=192.168.1.202
+      - CASSANDRA_BROADCAST_RPC_ADDRESS=192.168.1.202
+    env_file:
+      - .env
+    ports:
+      - "9044:9042"
+    expose:
+        - 7000 
+        - 7001
+        - 7199 
+        - 9042
+        - 9142
+
+networks:
+  cassandra_macvlan:
+    external: true
+    driver: macvlan
+    driver_opts:
+      parent: ens256
+      ip-range: 192.168.1.200/30
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.1.0/24
+        - gateway: 192.168.1.1
