@@ -65,12 +65,3 @@ services:
 networks:
   cassandra_macvlan:
     external: true
-    driver: macvlan
-    driver_opts:
-      parent: ens256
-      ip-range: 192.168.1.200/30
-    ipam:
-      driver: default
-      config:
-        - subnet: 192.168.1.0/24
-        - gateway: 192.168.1.1
