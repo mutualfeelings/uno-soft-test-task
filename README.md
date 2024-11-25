@@ -17,7 +17,7 @@ CONTAINER ID   IMAGE              COMMAND                  CREATED         STATU
 6. Сеть, к которой принадлежат контейнеры 'networks: - cassandra_macvlan'. Каждый контейнер Cassandra автоматически присоединяется к общей сети секции networks. Docker назначает IP-адреса для каждого контейнера в этой сети автоматически.
 7. 'expose' определяет порты, которые будут открыты внутри контейнера.
 
-Успешное подключение к узлу cassandra1, он доступен по локальному id через CQL (язык запросов Cassandra)
+Успешное подключение к узлам cassandra-1, cassandra-2, cassandra-3, он доступен по ip-адресу  
 > ![image](https://raw.githubusercontent.com/mutualfeelings/uno-soft-test-task/0a73cd2696cc41e3ada46793152ae5e343d52e65/image.png)
 
 # Развертывание кластера Cassandra с помощью Docker Compose
